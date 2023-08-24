@@ -2,27 +2,30 @@
 
 pipeline{
 
-    agent any
+  agent any
 
 
     stages{
          
-        stage('Git Checkout'){
+      stage('Git Checkout'){
                     
-            steps{
+        steps{
+
             gitCheckout(
+              
                 branch: "main",
                 url: "https://github.com/uday898989/ytut.git"                        
             )
         }
+      }
         
         stage('Unit Test maven'){
          
 
-             steps{
-                script{
+          steps{
+            script{
                    
-                    mvnTest()
+                mvnTest()
                 }
              }
         }
@@ -30,8 +33,8 @@ pipeline{
         stage('Integration Test maven'){
          
 
-             steps{
-                script{
+          steps{
+            script{
                    
                     mvnIntegrationTest()
                 }
@@ -40,8 +43,8 @@ pipeline{
          
         stage('static code analysis: sonarqube'){
 
-            steps{
-               script{
+          steps{
+              script{
 
                    def sonarQubecredentialsId = 'sona-api'
 
@@ -52,8 +55,8 @@ pipeline{
         }
         stage('Quality Gate Status Check : sonarqube'){
 
-            steps{
-               script{
+          steps{
+             script{
 
                    def sonarQubecredentialsId = 'sona-api'
 
@@ -62,16 +65,8 @@ pipeline{
             }
        
         }
-        stage('Maven Build : maven'){
-         
+       
+  }  
 
-             steps{
-                script{
-                   
-                    mvnBuild()
-                }
-             }
-        }
-    }
-         
 }
+
